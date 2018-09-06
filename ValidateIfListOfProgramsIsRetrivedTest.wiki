@@ -1,0 +1,69 @@
+In this set of test cases we would be validating the functionality of our get all Programs API
+
+'''Given '''I want to search the list of programs based on different program attribute/attributes . (Program name, status, Id , Type)
+
+'''When '''I send the data to the GetAPI
+
+'''Then '''List of all the programs associated with the attributes should be fetched.
+
+!| Import |
+| com.ibm.silverpop.sms.smpp.story119.fit |
+
+!***> Class paths
+
+!define TEST_SYSTEM{fit}
+!path fitnesse-standalone.jar
+!path C:\Users\Praful_kolhe\workspace\WcaAutomation\target\classes
+!path D:\jar piyush\Code for manager\Manager\target\classes
+!path D:\jar piyush\code for SMS manager\sms-manager\target\classes
+!path /C:\Utilities\FitnessePluralLatestJars\alternateLocation/*.jar
+!path /C:\Utilities\FitnessePluralLatestJars\SMS_Manager_jarExport/*.jar
+!path /C:\Fitnesse jars\FitLibrary-2.0\fitnesse/*.jar
+!path /D:\NewWorkspace\wca\target\lib/*.jar
+*!
+'''Retrieve list of Programs using Program Name'''
+
+'''Pre-requisite Tables '''
+
+''First we would be deleting all the programs by a passing {programName}''
+
+!| DeleteAPI |
+| recordsDeletionStatus? |
+| true |
+
+Now that All the data is deleted .
+
+We will create programs by providing unique fileds in programName,type,Code field .
+
+Number Of Programs To Be created - Specify the Number of Programs user needs to create with the specified combination of input.
+
+!| CreateNewProgram |
+| code | programname | status | type | NumberOfProgramsToBecreated | MultipleProgramCreated? |
+| code0 | FitnesseProgram | Active | FitnesseProgramtype | 10 | [200, 200, 200, 200, 200, 200, 200, 200, 200, 200] |
+
+Validate the Total number of Elements getting displayed .!-
+-!This would require some manual intervention
+
+!| ValidateNewProgramGeneration |
+| Id | programName | type | status | code | ProgramRetrived? | TotalElements? |
+| blank | blank | blank | blank | blank | | |
+
+In the Below Table we are actually validating the Retrieve list of Programs API.!-
+-!In the second pre-requisite table we had created 10 records with the unique set of data.!-
+-!So we will be validating if same number of records are being fetched at the output when searched with [[Program Name][ProgramName]], Type, Code
+
+Size - Number of records to be viewed on one page(For Pagination purpose)
+
+page - Page on which user needs to verify the records.This record should
+
+Total Elements - Total number of records present for given mobile number
+
+Total Pages - Total Elements/Records per page (size)
+
+Number of Elements - Expected value of records present on current page.
+
+!| ValidateNewProgramGeneration |
+| programName | type | status | code | size | page | Program Retrived? | TotalElements? | Total pages? | PageSize? | Number of Elements? |
+| FitnesseProgram | | | | 5 | 2 | | 10 | 2 | 5 | 5 |
+| | FitnesseProgramtype | | | 2 | 5 | | 10 | 5 | 2 | 2 |
+| | | | code0 | 10 | 1 | | 10 | 1 | 10 | 10 |
